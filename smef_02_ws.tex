@@ -1,0 +1,168 @@
+\documentclass [12pt,a4paper]{article}%размер листа, размер шрифта и тип документа (статья)
+
+\usepackage[12pt]{extsizes}
+\usepackage[utf8]{inputenc}% кодировка для Windows
+\usepackage[english,russian]{babel}%русский язык
+
+\usepackage{times}
+
+\usepackage[pdftex]{graphicx}% подключаем пакет графики
+\usepackage{color}% подключаем другие пакеты, которые будут использоваться
+\usepackage[colorlinks]{hyperref}
+\usepackage{amsmath,amssymb}%для фигурных скобок системы
+\usepackage{lscape} % поддержка страниц в альбомной ориентации
+\usepackage[left=30mm, top=25mm, right=20mm, bottom=20mm, nofoot]{geometry}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{tempora}
+\usepackage{caption} % подписи к рисункам в русской типографской традиции
+%чтобы в нумерации была точка
+\DeclareCaptionLabelFormat{gosttable}{Table #2}
+\DeclareCaptionLabelSeparator{gost}{.~}
+\captionsetup{labelsep=gost}
+\captionsetup[figure]{labelformat=gostfigure}
+\captionsetup[table]{labelformat=gosttable}
+
+\usepackage{graphicx}%Вставка картинок правильная
+\usepackage{float}%"Плавающие" картинки
+\usepackage{wrapfig}%Обтекание фигур (таблиц, картинок и прочего)
+
+\usepackage{cmap}					
+\usepackage{mathtext} 				
+\usepackage[T2A]{fontenc}		
+\usepackage[utf8]{inputenc}			
+\usepackage[english,russian]{babel}	
+
+\usepackage{amsfonts,amssymb,amsthm,mathtools} 
+\usepackage{amsmath}
+\usepackage{icomma} 
+
+
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}
+	{\hbox{$\mathsurround=0pt #1$}}{}}
+
+\usepackage{graphicx} 
+\graphicspath{{images/1/}{images/2/}{images/4/}}
+\setlength\fboxsep{3pt} 
+\setlength\fboxrule{1pt} 
+\usepackage{wrapfig} 
+
+
+\usepackage{array,tabularx,tabulary,booktabs} 
+\usepackage{longtable}  
+\usepackage{multirow} 
+\usepackage{array}
+
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{float}
+
+
+\usepackage[dvips]{graphicx}
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Эконометрика 1 (углубленный курс),  НИУ ВШЭ}
+\chead{}
+\rhead{Семинары: Погорелова П.В.}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\onehalfspacing %полуторный интервал
+
+%\footheight=10pt
+\footskip=10mm
+\graphicspath{{figures/}}
+\newcommand{\rouble}{{\rm{Р}\kern-.635em\rule[.5ex]{.52em}{.04em}\kern.11em}}
+
+
+\begin{document}
+
+
+\begin{center}
+\large Семинар 2.\\
+Решение.
+\end{center}
+
+\begin{enumerate}
+
+\item Рассмотрим нормальную классическую линейную модель множественной регрессии $y_i = \beta_1 + \beta_2x_{i2} + ... +\beta_kx_{ik} + \varepsilon_i$ с неслучайными регрессорами.
+Дополнительно известно, что на самом деле $\beta_2 = ... = \beta_k = 0$.
+\begin{itemize}
+\item[(a)] Найдите $\mathbb{E}(R^2)$.
+\item[(b)] Найдите $\mathbb{E}(R^2_{adj.})$.
+\item[(c)] Покажите, что $nR^2 \sim \chi^2(k-1)$.
+\end{itemize}
+
+\textbf{Решение:}
+\item[(a)] Модель без ограничений: 
+\[
+Y_i = \beta_1 + \beta_2X_{i2} + ... +\beta_kX_{ik} + \varepsilon_i.
+\]
+
+Модель с ограничениями (истинная модель!):
+
+\[
+Y_i = \beta_1 + \varepsilon_i.
+\]
+
+Тогда F-статистика при справедливости $H_0$ имеет следующий вид:
+\[
+F = \frac{R^2(k-1)}{(1-R^2)/(n-k)} \sim F(k-1,n-k).
+\]
+
+Выразим $R^2$:
+\[
+R^2(n-k) = F(1-R^2)(n-k).
+\]
+
+\textbf{Утверждение №1:} Если $X \sim F(k_1,k_2)$, то $Y = \frac{\frac{k_1}{k_2}X}{1+\frac{k_1}{k_2}X} \sim Beta \left(\frac{k_1}{2}, \frac{k_2}{2}\right)$.
+
+Используя утверждение №1, получаем:
+
+\[
+R^2 = \frac{(k-1)F}{(n-k) + (k-1)F} = \frac{\frac{k-1}{n-k}F}{1+\frac{k-1}{n-k}F}} \sim Beta\left(\frac{k-1}{2},\frac{n-k}{2}\right).
+\]
+
+Тогда чтобы посчитать математическое ожидание $R^2$, надо вспомнить, чему равно математическое ожидание для $Beta\left(\frac{k-1}{2},\frac{n-k}{2}\right)$:
+
+\[
+E(R^2) = \frac{\frac{k-1}{2}}{\frac{k-1}{2}+\frac{n-k}{2}} = \frac{k-1}{n-1}.
+\]
+
+Что нам даёт полученный результат? Математическое ожидание коэффициента детерминации линейно по $k$. То есть даже при включении в модель лишних факторов $R^2$ все равно продолжает линейно расти! Однако мы знаем, что истинная модель --- это регрессия на константу, и матожидание ее коэффициента детерминации должно быть равно нулю. В следующем пункте покажем, что использование скорректированного коэффициента детерминации позволяет преодолеть такое нежелательное свойство коэффициента детерминации как линейный рост по параметру $k$ (число регрессоров).
+
+\item[(b)] Скорректированный коэффициент детерминации имеет вид:
+\[
+R^2_{adj.} = 1 - \left(1 - R^2\right)\frac{n-1}{n-k}.
+\]
+Рассчитаем математическое ожидание:
+\[
+E(R^2_{adj.}) = E\left(1 - \left(1 - R^2\right)\frac{n-1}{n-k}\right) = 1-\frac{n-1}{n-k}+\frac{n-1}{n-k}E(R^2) = 
+\]
+\[
+= 1-\frac{n-1}{n-k}+\frac{n-1}{n-k}\frac{k-1}{n-1} = 0.
+\]
+
+Скорректированный $R^2$ помог решить проблему линейного роста по $k$!
+
+
+\item[(c)] Заметим, что выражение для $R^2$ из пункта (а) можно переписать в следующем виде:
+\[
+R^2 = \frac{\frac{k-1}{n-k}F}{1+\frac{k-1}{n-k}F}} = \frac{\chi^2_{(k-1)}}{\chi^2_{(n-1)}}.
+\]
+Тогда рассмотрим
+$\lim_{n \to \infty} nR^2 = \lim_{n \to \infty} n\frac{\chi^2_{(k-1)}}{\chi^2_{(n-1)}} =  \lim_{n \to \infty} \frac{\chi^2_{(k-1)}}{\frac{\chi^2_{(n-1)}}{n-1}\frac{n-1}{n}}.$\\
+Заметим, что $\lim_{n \to \infty}\frac{n-1}{n} = 1$, а $\lim_{n \to \infty}\frac{\chi^2_{(n-1)}}{n-1\\
+} = 1$.\\
+Следовательно, $\lim_{n \to \infty} nR^2 = \chi^2_{(k-1)}.$
+
+\end{enumerate}
+
+\end{document}
+
